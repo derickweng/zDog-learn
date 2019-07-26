@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id='rocket'></canvas>
+    <script src="./node_modules/zdog/dist/zdog.dist.min.js"></script>
+    <script type="text/javascript">
+        let isSpinning = true;
+ 
+        let illo = new Zdog.Illustration({
+            element: '#rocket',
+            zoom: 4,
+            dragRotate: true,
+            // stop spinning when drag starts
+            onDragStart: function() {
+                isSpinning = false;
+            },
+        });
+        
+        // circle
+        new Zdog.Ellipse({
+            addTo: illo,
+            diameter: 20,
+            width: 10,
+            height: 30,
+            translate: { z: 10 },
+            stroke: 5,
+            color: '#636',
+        });
+        
+        // square
+        new Zdog.Rect({
+            addTo: illo,
+            width: 20,
+            height: 20,
+            translate: { z: -10 },
+            stroke: 3,
+            color: '#E62',
+            fill: true,
+        });
+        
+        function animate() {
+            illo.rotate.y += isSpinning ? 0.03 : 0;
+            illo.updateRenderGraph();
+            requestAnimationFrame( animate );
+        }
+        animate();
+    </script>
+</body>
+</html>
